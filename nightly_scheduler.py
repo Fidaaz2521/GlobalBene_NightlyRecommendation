@@ -139,7 +139,7 @@ def compute_and_store_topk_for_all_users(k: int = TOP_K, batch_size: int = 128) 
             failed += len(batch)
             continue
 
-        # query FAISS for each user in the batch
+               # query FAISS for each user in the batch
         for uid, emb in zip(user_ids, user_embeddings):
             try:
                 distances, item_ids = indexer.search(emb, k=k)
@@ -147,9 +147,12 @@ def compute_and_store_topk_for_all_users(k: int = TOP_K, batch_size: int = 128) 
                 # convert to scores: higher = better
                 dists = distances[0] if distances.ndim == 2 else distances
                 scores = [float(1.0 / (1.0 + float(d))) for d in dists]
+
                 recs = []
-                for rank, (pid, sc) in enumerate(zip(item_ids[0], scores), start=1):
+                # item_ids is already a 1D list of post_ids
+                for rank, (pid, sc) in enumerate(zip(item_ids, scores), start=1):
                     recs.append({"item_id": str(pid), "score": sc, "rank": rank})
+
 
                 # store in upstash (with TTL from config)
                 ok = upstash_client.store_user_recommendations(uid, recs, expiry_hours=CACHE_EXPIRY_HOURS)
@@ -189,3 +192,4 @@ def run_full_nightly_job():
 
 if __name__ == "__main__":
     run_full_nightly_job()
+
