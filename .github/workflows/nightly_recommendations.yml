@@ -1,0 +1,42 @@
+name: Nightly Recommendations
+
+on:
+  schedule:
+    # Runs every day at 2:00 AM IST (which is 20:30 UTC previous day)
+    - cron: '30 20 * * *'
+  workflow_dispatch:   # allows you to run it manually from the Actions tab
+  
+jobs:
+  nightly-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run nightly scheduler
+        env:
+          MONGO_URI: ${{ secrets.MONGO_URI }}
+          DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
+          UPSTASH_REDIS_REST_URL: ${{ secrets.UPSTASH_REDIS_REST_URL }}
+          UPSTASH_REDIS_REST_TOKEN: ${{ secrets.UPSTASH_REDIS_REST_TOKEN }}
+          UPSTASH_REDIS_URL: ${{ secrets.UPSTASH_REDIS_URL }}
+          SBERT_MODEL_NAME: ${{ secrets.SBERT_MODEL_NAME }}
+          FAISS_INDEX_PATH: ${{ secrets.FAISS_INDEX_PATH }}
+          EMBEDDINGS_PATH: ${{ secrets.EMBEDDINGS_PATH }}
+          MODEL_PATH: ${{ secrets.MODEL_PATH }}
+          TOP_K: ${{ secrets.TOP_K }}
+          EMBEDDING_DIMENSION: ${{ secrets.EMBEDDING_DIMENSION }}
+          CACHE_EXPIRY_HOURS: ${{ secrets.CACHE_EXPIRY_HOURS }}
+        run: |
+          python nightly_scheduler.py
