@@ -34,7 +34,7 @@ jobs:
           SBERT_MODEL_NAME: ${{ secrets.SBERT_MODEL_NAME }}
           FAISS_INDEX_PATH: ${{ secrets.FAISS_INDEX_PATH }}
           EMBEDDINGS_PATH: ${{ secrets.EMBEDDINGS_PATH }}
-          MODEL_PATH: ${{ secrets.MODEL_PATH }}
+          
           TOP_K: ${{ secrets.TOP_K }}
           EMBEDDING_DIMENSION: ${{ secrets.EMBEDDING_DIMENSION }}
           CACHE_EXPIRY_HOURS: ${{ secrets.CACHE_EXPIRY_HOURS }}
