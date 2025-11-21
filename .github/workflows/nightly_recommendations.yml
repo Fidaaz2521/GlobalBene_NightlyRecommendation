@@ -2,9 +2,8 @@ name: Nightly Recommendations
 
 on:
   schedule:
-    # Runs every day at 20:30 UTC = 2:00 AM IST
-    - cron: "30 20 * * *"
-  workflow_dispatch:   # keep this so you can still run it manually
+    - cron: "30 20 * * *"     # 2:00 AM IST (20:30 UTC previous day)
+  workflow_dispatch:          # keep this so you can run it manuallyy
   
 jobs:
   nightly-job:
