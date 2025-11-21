@@ -32,6 +32,7 @@ jobs:
           UPSTASH_REDIS_REST_TOKEN: ${{ secrets.UPSTASH_REDIS_REST_TOKEN }}
           UPSTASH_REDIS_URL: ${{ secrets.UPSTASH_REDIS_URL }}
           SBERT_MODEL_NAME: ${{ secrets.SBERT_MODEL_NAME }}
+          SBERT_CACHE_DIR: ${{ secrets.SBERT_CACHE_DIR }}
           FAISS_INDEX_PATH: ${{ secrets.FAISS_INDEX_PATH }}
           EMBEDDINGS_PATH: ${{ secrets.EMBEDDINGS_PATH }}
           
