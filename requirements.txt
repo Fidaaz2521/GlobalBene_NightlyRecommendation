@@ -22,11 +22,24 @@
 # pytest==7.4.0
 # pytest-cov==4.1.0
 
+# --- Web API ---
 fastapi
-uvicorn[standard]
-pandas
+uvicorn
+
+# --- ML / Embeddings / Similarity ---
+sentence-transformers
+torch           # needed by sentence-transformers
+faiss-cpu       # for FAISS index (nightly job + any FAISS-based logic)
+
+# --- Data & Utils ---
 numpy
-scikit-learn
-python-dotenv
-pymongo
-upstash-redis
+pandas
+tqdm
+python-dotenv   # if you load env vars from .env
+
+# --- Database & Cache ---
+pymongo         # MongoDB
+upstash-redis   # Upstash Redis client
+
+# --- Validation / Settings (if used in config) ---
+pydantic
